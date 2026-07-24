@@ -7,18 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include=".vs\UserRoles\v17\DocumentLayout.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include=".vs\UserRoles\config\applicationhost.config" />
-    <None Include=".vs\UserRoles\CopilotIndices\17.14.1368.60722\CodeChunks.db" />
-    <None Include=".vs\UserRoles\CopilotIndices\17.14.1368.60722\CodeChunks.db-shm" />
-    <None Include=".vs\UserRoles\CopilotIndices\17.14.1368.60722\CodeChunks.db-wal" />
-    <None Include=".vs\UserRoles\CopilotIndices\17.14.1368.60722\SemanticSymbols.db" />
-    <None Include=".vs\UserRoles\CopilotIndices\17.14.1368.60722\SemanticSymbols.db-shm" />
-    <None Include=".vs\UserRoles\CopilotIndices\17.14.1368.60722\SemanticSymbols.db-wal" />
-    <None Include=".vs\UserRoles\FileContentIndex\f3fd3e40-fcaf-4476-a62b-3093d3802617.vsidx" />
+    <Compile Remove=".vs\**" />
+    <Content Remove=".vs\**" />
+    <EmbeddedResource Remove=".vs\**" />
+    <None Remove=".vs\**" />
   </ItemGroup>
 
   <ItemGroup>
