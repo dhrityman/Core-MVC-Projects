@@ -1,0 +1,52 @@
+﻿@*
+    The _LoginPartial.cshtml file is a Razor view that represents a partial view for displaying login-related functionality in an ASP.NET Core application.
+    It is typically included in the layout or other views to provide a consistent login/logout experience across the application.
+*@
+@using Microsoft.AspNetCore.Identity;
+@*
+    The @inject directive is used to inject the SignInManager<Users> service into the view. This allows the view to access the SignInManager instance, which is responsible for handling user sign-in and authentication operations.
+    The SignInManager class provides methods for signing in users, checking if a user is signed in, and managing authentication cookies.
+    By injecting the SignInManager into the view, you can use it to determine if a user is currently signed in and display appropriate navigation options (e.g., login, logout) based on their authentication status.
+*@
+@inject SignInManager<Users> signInManager;
+@*
+    The <ul> element represents an unordered list that contains navigation items related to user authentication.
+    The class attributes "navbar-nav ms-auto align-items-center" are Bootstrap classes that style the list as a navigation menu, align it to the right (ms-auto), and vertically center the items (align-items-center).
+*@
+<ul class="navbar-nav ms-auto align-items-center">
+    @if (signInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            @*
+                The form uses the POST method to submit the logout request to the server.
+                The asp-controller and asp-action attributes specify that the form should be submitted to the Logout action in the Account controller.
+                Html.AntiForgeryToken():=> Generates a hidden anti-forgery token field to protect against cross-site request forgery (CSRF) attacks.
+            *@
+            <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">               
+                @Html.AntiForgeryToken()
+                @*
+                    The button is styled as a link using the btn-link class, and it has additional classes for styling and spacing.
+                    When clicked, it will submit the form and log the user out of the application.
+                *@
+                <button type="submit" class="btn btn-link nav-link text-dark p-0">Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        @*
+           class="nav-item"          : The nav-item class is a standard CSS selector popularized by Bootstrap Navs. It formats an individual list element <li> within a horizontal or vertical navigation menu.
+           class="nav-link text-dark": The class nav-link text-dark is used in front-end web development to style navigational links, typically in a Bootstrap framework. nav-link applies structural styling (padding, spacing, and hover states), while text-dark overrides default colors to make the text a dark gray/black.
+         *@
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">
+                Login
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">
+                Register
+            </a>
+        </li>
+    }
+</ul>

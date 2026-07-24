@@ -1,0 +1,63 @@
+﻿@*
+    The @inherits directive is used to specify the base class that the Razor view inherits from. In this case, it is inheriting from the "Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>" class, 
+    where TModel is a generic type parameter representing the model type for the view. This allows the view to have access to the properties and methods of the specified base class, 
+    enabling it to work with strongly typed models and perform various operations related to rendering HTML content.
+*@
+<!DOCTYPE html>
+
+<html>
+<head>
+    @*The meta charset tag specifies the character encoding for the HTML document. 
+      UTF-8 is a widely used character encoding that can represent almost all characters in the Unicode standard. It is recommended to use UTF-8 for 
+      web pages to ensure proper rendering of text, especially for internationalization and multilingual content.
+    *@
+    <meta name="viewport" content="width=device-width" />
+    @* The ViewBag.Title property is simply a string object. In this case it's being used in the view to actually define the Title property. *@
+    <title>@ViewBag.Title</title>
+    @*
+        The importmap script tag is used to define an import map for JavaScript modules. Import maps allow you to control the behavior of module imports in the browser, 
+        enabling you to specify how module specifiers are resolved to actual URLs. This can be useful for managing dependencies and organizing your JavaScript code.
+    *@
+    <script type="importmap"></script>    
+    @*
+        Looking to quickly add Bootstrap to your project
+        The link tags are used to include external CSS stylesheets in the HTML document. In this case, the first link tag includes the Bootstrap CSS framework, 
+        which provides a set of pre-designed styles and components for building responsive and visually appealing web pages. The second link tag includes a custom CSS file named "account.css" 
+        that can be used to define additional styles specific to the account-related pages of the application.
+    *@
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @*
+        The link tags are used to include external CSS stylesheets in the HTML document. In this case, the first link tag includes the Bootstrap CSS framework, 
+        which provides a set of pre-designed styles and components for building responsive and visually appealing web pages. The second link tag includes a custom CSS file named "account.css" 
+        that can be used to define additional styles specific to the account-related pages of the application.
+    *@
+    <link rel="stylesheet" href="~/css/account.css" />
+</head>
+<body>
+    <div>
+        @* 
+            The @RenderBody() method is used in a layout page to render the content of the view that is using that layout. 
+            It acts as a placeholder where the content of the specific view will be injected when the page is rendered. 
+            This allows for a consistent layout across multiple views while still allowing each view to provide its own unique content.
+        *@
+        @RenderBody()
+    </div>
+
+  @*
+        The script tags are used to include external JavaScript files in the HTML document. In this case, the first script tag includes the jQuery library, 
+        which is a popular JavaScript library that simplifies DOM manipulation and event handling. The second script tag includes the Bootstrap JavaScript bundle, 
+        which provides additional functionality for Bootstrap components such as modals, dropdowns, and carousels. The third script tag includes a custom JavaScript file named "site.js" 
+        that can be used to define additional scripts specific to the application. The asp-append-version="true" attribute is used to append a version query string to the URL of the script file, 
+        which helps with cache busting and ensures that the browser loads the latest version of the script when it changes.
+  *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @*
+        The @RenderSectionAsync("Scripts", required: false) method is used in a layout page to render a specific section of content defined in the view that is using that layout. 
+        In this case, it is looking for a section named "Scripts". The required: false parameter indicates that this section is optional, meaning that if the view does not define a "Scripts" section, 
+        the layout will still render without any errors. This allows for flexibility in including additional scripts on specific pages while maintaining a consistent layout.
+    *@
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

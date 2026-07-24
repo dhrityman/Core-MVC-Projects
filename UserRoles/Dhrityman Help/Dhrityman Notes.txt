@@ -1,0 +1,93 @@
+Youtube Video:
+https://www.youtube.com/watch?v=8hsquiu8a2M&list=PLTOaik4iw-qUzTx82QuAso1NktusoyJ9J&index=1
+
+Code:
+https://github.com/FLDevelopers/ASP.NET-Core-MVC-with-Role-Based-Authentication-and-Authorization
+--------------------------------------------------------------------------------------------------------
+Application User and Passowrd:
+Name:admin
+Role:admin
+Email:admin@UserRolesApplication.com
+Admin Password:Admin@123
+
+User:Dhrityman
+Role:User
+Email: dhrityman@UserRolesApplication.com
+Password:Dhrityman@123
+
+User:Dhrityman Mukherjee
+Role:User
+Email: dhrityman.mukherjee@UserRolesApplication.com
+Password:Dhrityman@123
+--------------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------------
+Open Manage NuGet and Install the following:
+
+
+Microsoft.AspNetCore.Identity.EntityFrameworkCore
+Microsoft.EntityFrameworkCore
+Microsoft.EntityFrameworkCore.SqlServer
+Microsoft.EntityFrameworkCore.Tools
+----------------------------------------------
+This is my connection string
+
+{
+  "Data": {
+    "PhotoGalleryConnection": {
+      "ConnectionString": "Server=WINDOWS-B7MJR5T\\SQLEXPRESS;User Id=sa;password=allah;Database=PhotoGallery;Trusted_Connection=True;MultipleActiveResultSets=true"
+    }
+  }
+}
+--------------------------------------------------------------------------------------
+TrustServerCertificate=True is required in canse of HTTPS or SSL connection issues. It allows the application to trust the server's SSL certificate without validating it against a trusted certificate authority. This is useful in development environments or when using self-signed certificates, but it should be used with caution in production environments due to potential security risks.
+
+For Windows Authentication
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Database=UserRoles;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
+  },
+------------------------------------------------------------------------------------------------------
+
+Package Manager Commands:
+1.  add-migration "Init"
+2.  update-database
+----------------------------------------------------------------------------------------
+Razer class in Views/Shared folder like "_LoginPartial.cshtml" 
+Need to Start from YouTube Video "09 - Create Custom Login Page & Login Method"
+---------------------------------------------------------------------------------------------------
+How to Create Cascading Dropdown List (Country, State, City) in ASP.NET Core | Step-by-Step Example
+https://www.youtube.com/watch?v=6g6ZNvX4aXM
+------------------------------------------------------------------------------------------------------
+Get started with Bootstrap
+https://getbootstrap.com/docs/5.3/getting-started/introduction/
+https://getbootstrap.com/docs/5.3/forms/select/
+Navigation Bar
+https://www.w3schools.com/bootstrap/bootstrap_navbar.asp
+
+All Bootstrap CSS classes
+https://bootstrapshuffle.com/classes
+
+--
+What is Bootstrap? / Beginner CSS Framework
+https://www.youtube.com/watch?v=MyCvTSjkD74&t=227s
+------------------------------------------------------------------------------------------------------
+How to create a mobile number input box with fixed country code
+https://stackoverflow.com/questions/78652927/how-to-create-a-mobile-number-input-box-with-fixed-country-code
+------------------------------------------------------------------------------------------------------
+CodePen Home
+International Telephone Input - BOOTSTRAP INPUT GROUP
+https://codepen.io/jackocnr/pen/EyPXed
+------------------------------------------------------------------------------------------------------
+For the Drop down:
+Part 7, Razor Pages with EF Core in ASP.NET Core - Update Related Data
+https://learn.microsoft.com/en-us/aspnet/core/data/ef-rp/update-related-data?view=aspnetcore-10.0
+------------------------------------------------------------------------------------------------------
+How To Fill Dropdown in ASP.NET MVC
+https://www.youtube.com/watch?v=b-pgXU3obAU
+------------------------------------------------------------------------------------------------------
+Visual Studio Git Ignore File:
+https://github.com/github/gitignore/blob/main/visualstudio.gitignore
+------------------------------------------------------------------------------------------------------
+
+
+

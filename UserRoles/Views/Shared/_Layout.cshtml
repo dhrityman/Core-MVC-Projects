@@ -1,0 +1,195 @@
+﻿@*
+    The <!DOCTYPE html> declaration is used to specify the document type and version of HTML being used. 
+    In this case, it indicates that the document is an HTML5 document. 
+    It helps browsers render the page correctly and ensures that the page adheres to the HTML5 standard.
+*@
+<!DOCTYPE html>
+@*
+    The <html> tag is the root element of an HTML document. 
+    It contains all other elements and attributes that make up the web page. 
+    The lang attribute specifies the primary language of the document's content, which can help search engines and assistive technologies understand the language being used.
+*@
+<html lang="en">
+    @*
+        The <head> section of an HTML document contains metadata and links to external resources that are not displayed directly on the web page. 
+        It typically includes elements such as the character encoding, viewport settings, title, stylesheets, and scripts. 
+        The content within the <head> section helps define the overall structure and behavior of the web page.
+    *@
+<head>
+    @*
+        The <meta charset="utf-8" /> tag specifies the character encoding for the HTML document. 
+        UTF-8 is a widely used character encoding that can represent almost all characters in the Unicode standard. 
+        It is recommended to use UTF-8 for web pages to ensure proper rendering of text, especially for internationalization and multilingual content.
+    *@
+    <meta charset="utf-8" />
+    @*
+        The <meta name="viewport" content="width=device-width, initial-scale=1.0" /> tag is used to control the layout and scaling of the web page on different devices, particularly mobile devices. 
+        It sets the width of the viewport to match the device's width and sets the initial zoom level to 1.0. 
+        This helps ensure that the web page is displayed correctly and is responsive across various screen sizes.
+    *@
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @*
+        The <title> tag defines the title of the web page, which is displayed in the browser's title bar or tab. 
+        In this case, it uses the value of ViewData["Title"] to dynamically set the title based on the current view being rendered. 
+        The title is followed by a hyphen and the name "UserRoles", which provides additional context about the application or website.
+    *@
+    <title>@ViewData["Title"] - UserRoles</title>
+    @*
+        The <script type="importmap"></script> tag is used to define an import map for JavaScript modules. 
+        Import maps allow you to control the behavior of module imports in the browser, enabling you to specify how module specifiers are resolved to actual URLs. 
+        This can be useful for managing dependencies and organizing your JavaScript code.
+    *@
+    <script type="importmap"></script>
+    @*
+        Looking to quickly add Bootstrap to your project
+        The <link> tags are used to include external CSS stylesheets in the HTML document. 
+        In this case, the first link tag includes the Bootstrap CSS framework, which provides a set of pre-designed styles and components for building responsive and visually appealing web pages. 
+        The second link tag includes a custom CSS file named "site.css" that can be used to define additional styles specific to the application. 
+        The third link tag includes another custom CSS file named "UserRoles.styles.css" that can be used to define additional styles specific to the UserRoles application. 
+        The asp-append-version="true" attribute is used to append a version query string to the URL of the stylesheet, which helps with cache busting and ensures that the browser loads the latest version of the stylesheet when it changes.
+    *@
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @*
+        The <link> tags are used to include external CSS stylesheets in the HTML document. 
+        In this case, the first link tag includes the Bootstrap CSS framework, which provides a set of pre-designed styles and components for building responsive and visually appealing web pages. 
+        The second link tag includes a custom CSS file named "site.css" that can be used to define additional styles specific to the application. 
+        The third link tag includes another custom CSS file named "UserRoles.styles.css" that can be used to define additional styles specific to the UserRoles application. 
+        The asp-append-version="true" attribute is used to append a version query string to the URL of the stylesheet, which helps with cache busting and ensures that the browser loads the latest version of the stylesheet when it changes.
+    *@
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @*
+        The <link> tags are used to include external CSS stylesheets in the HTML document. 
+        In this case, the first link tag includes the Bootstrap CSS framework, which provides a set of pre-designed styles and components for building responsive and visually appealing web pages. 
+        The second link tag includes a custom CSS file named "site.css" that can be used to define additional styles specific to the application. 
+        The third link tag includes another custom CSS file named "UserRoles.styles.css" that can be used to define additional styles specific to the UserRoles application. 
+        The asp-append-version="true" attribute is used to append a version query string to the URL of the stylesheet, which helps with cache busting and ensures that the browser loads the latest version of the stylesheet when it changes.
+    *@
+    <link rel="stylesheet" href="~/UserRoles.styles.css" asp-append-version="true" />
+</head>
+<body>
+    @*
+        The <header> section of the HTML document contains the navigation bar for the web page. 
+        It includes a <nav> element with various classes and attributes that define the appearance and behavior of the navigation bar. 
+        The navigation bar contains links to different pages of the application, such as Home, Privacy, Admin, and Users. 
+        It also includes a partial view named "_LoginPartial" that handles user authentication and displays login/logout options based on the user's authentication status.
+    *@
+    <header>
+        @*
+            The <nav> element represents a section of the page that contains navigation links. 
+            It is styled with Bootstrap classes to create a responsive and visually appealing navigation bar. 
+            The navigation bar includes links to different pages of the application, such as Home, Privacy, Admin, and Users. 
+            The visibility of the Admin and Users links is controlled based on the user's role using conditional statements. 
+            The partial view "_LoginPartial" is included to handle user authentication and display login/logout options based on the user's authentication status.
+            
+            navbar: The "navbar" class is a Bootstrap class that styles the navigation bar, providing a consistent look and feel across different pages of the application.
+            navbar-expand-sm: The "navbar-expand-sm" class is a Bootstrap class that makes the navigation bar responsive.
+            navbar-toggleable-sm: The "navbar-toggleable-sm" class is a Bootstrap class that allows the navigation bar to collapse into a toggleable menu on smaller screens.
+            navbar-light: The "navbar-light" class is a Bootstrap class that applies a light color scheme to the navigation bar, making it suitable for use on light backgrounds.
+            bg-white: The "bg-white" class is a Bootstrap class that sets the background color of the navigation bar to white.
+            border-bottom: The "border-bottom" class is a Bootstrap class that adds a bottom border to the navigation bar, providing visual separation from the content below.
+            box-shadow: The "box-shadow" class is a Bootstrap class that adds a subtle shadow effect to the navigation bar, giving it a sense of depth and elevation.
+            mb-3: The "mb-3" class is a Bootstrap class that adds a margin-bottom of 1rem (16px) to the navigation bar, creating space between the navigation bar and the content below.
+        *@
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            @*
+                The <div class="container-fluid"> element is a Bootstrap class that creates a full-width container for the navigation bar content. 
+                It ensures that the content is properly aligned and spaced within the navigation bar, providing a responsive layout that adapts to different screen sizes.
+            *@
+            <div class="container-fluid">
+                @*
+                    The <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">UserRoles</a> element represents the brand or logo of the application. 
+                    It is styled with the "navbar-brand" class, which applies specific styles to make it visually distinct within the navigation bar. 
+                    The "asp-area", "asp-controller", and "asp-action" attributes are used to generate a link to the Home controller's Index action, allowing users to navigate back to the home page when they click on the brand name.
+                *@
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">UserRoles</a>
+                @*
+                    The <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation"> element represents a button that toggles the visibility of the navigation links on smaller screens. 
+                    It is styled with the "navbar-toggler" class, which applies specific styles to make it visually distinct within the navigation bar. 
+                    The "data-bs-toggle", "data-bs-target", "aria-controls", "aria-expanded", and "aria-label" attributes are used to control the behavior and accessibility of the toggle button, allowing users to expand or collapse the navigation links when they click on the button.
+                *@
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        @*
+                            span: The <span class="navbar-toggler-icon"></span> element represents the icon displayed on the toggle button.
+                            The span tag in HTML lets you apply styling, scripting, or structure to a specific portion of text or inline content. 
+                            It doesn't add any visual change by itself but serves as a powerful tool for wrapping text or elements that need custom styling or behavior.
+                        *@
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                @*
+                    The <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between"> element represents a collapsible container for the navigation links. 
+                    It is styled with the "navbar-collapse", "collapse", "d-sm-inline-flex", and "justify-content-between" classes, which control the layout and visibility of the navigation links based on the screen size. 
+                    The "navbar-collapse" class applies specific styles to make the container visually distinct within the navigation bar, while the "collapse" class allows it to be hidden or shown based on user interaction with the toggle button. 
+                    The "d-sm-inline-flex" class ensures that the navigation links are displayed inline on small screens, while the "justify-content-between" class distributes the links evenly across the available space.
+                *@
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    @*
+                        The <ul class="navbar-nav flex-grow-1"> element represents an unordered list of navigation links. 
+                        It is styled with the "navbar-nav" and "flex-grow-1" classes, which control the layout and appearance of the list items. 
+                        The "navbar-nav" class applies specific styles to make the list visually distinct within the navigation bar, while the "flex-grow-1" class allows the list to expand and fill the available space within the container.
+                    *@
+                    <ul class="navbar-nav flex-grow-1">
+                        @*
+                            The <li class="nav-item"> element represents a single item in the navigation list. 
+                            It is styled with the "nav-item" class, which applies specific styles to make the item visually distinct within the navigation bar. 
+                            The <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a> element represents a link to the Home page of the application. 
+                            It is styled with the "nav-link" and "text-dark" classes, which control the appearance of the link, including its color and hover effects. 
+                            The "asp-area", "asp-controller", and "asp-action" attributes are used to generate a link to the Home controller's Index action, allowing users to navigate to the home page when they click on the link.
+                        *@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        @*
+                            The @if (User.IsInRole("Admin")) and @if (User.IsInRole("User")) statements are conditional statements that check the role of the currently authenticated user. 
+                            If the user is in the "Admin" role, a navigation link to the Admin page is displayed. 
+                            If the user is in the "User" role, a navigation link to the Users page is displayed. 
+                            This allows for role-based access control, ensuring that only users with the appropriate roles can access certain pages of the application.
+                        *@
+                        @if (User.IsInRole("Admin"))
+                        {                           
+                            @*
+                                class="nav-item": The nav-item class is a standard CSS selector popularized by Bootstrap Navs. It formats an individual list element <li> within a horizontal or vertical navigation menu.
+                                class="nav-link": The class class="nav-link" is primarily used in the Bootstrap CSS framework. It is applied to anchor <a> tags to style hyperlinks within navigation bars (e.g., <nav> or <header> elements). 
+                            *@
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Home" asp-action="Admin">Admin</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("User"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Home" asp-action="User">Users</a>
+                            </li>
+                        }
+                        @*
+                            The <partial name="_LoginPartial" /> element is used to include a partial view named "_LoginPartial" within the navigation bar. 
+                            This partial view handles user authentication and displays login/logout options based on the user's authentication status. 
+                            It allows for a consistent and reusable login/logout interface across different pages of the application, ensuring that users can easily access authentication functionality from the navigation bar.
+                        *@
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - UserRoles - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

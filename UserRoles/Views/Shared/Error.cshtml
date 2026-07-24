@@ -1,0 +1,50 @@
+﻿@*
+    This file is part of the ASP.NET Core project template.
+    It is used to display error information when an unhandled exception occurs.
+    You can customize this view to provide a better user experience for your application.
+
+     The @model directive specifies the type of the model that will be used in this view. In this case, it is an instance of the ErrorViewModel class.
+    The ErrorViewModel class typically contains properties such as RequestId and ShowRequestId, which are used to display error information to the user.
+*@
+@model ErrorViewModel
+@*
+    The ViewData dictionary is used to pass data from the controller to the view. In this case, we are setting the "Title" key in the ViewData dictionary to "Error".
+    This value can be accessed in the layout or other parts of the view to display the title of the page.
+*@
+@{
+    ViewData["Title"] = "Error";
+}
+@*
+    The layout is set to the _AccountLayout.cshtml file, which provides a consistent look and feel for account-related pages.
+    You can customize the layout or create a new one if needed.
+*@
+<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">An error occurred while processing your request.</h2>
+@*
+    The following section displays the Request ID if the ShowRequestId property of the model is true.
+    This can be useful for troubleshooting and identifying specific requests that caused errors.
+*@
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+@*
+    The following section provides information about the development mode and how to enable it for local debugging.
+    It is important to note that the development environment should not be enabled for deployed applications, as it may expose sensitive information.
+*@
+<h3>Development Mode</h3>
+<p>
+    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
+</p>
+@*
+    The following section provides a warning about enabling the development environment in deployed applications.
+    It emphasizes the importance of keeping sensitive information secure and provides instructions for enabling the development environment for local debugging.
+*@
+<p>
+    <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
+    It can result in displaying sensitive information from exceptions to end users.
+    For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
+    and restarting the app.
+</p>

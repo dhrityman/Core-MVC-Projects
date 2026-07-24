@@ -1,0 +1,94 @@
+﻿﻿@using UserRoles.ViewModels;
+@* 
+    This is the login page for the application. It allows users to enter their email and password to log in.
+    The form includes validation messages and a link to reset the password if the user has forgotten it.
+    The layout used for this page is _AccountLayout.cshtml, which provides a consistent look and feel for account-related pages.
+*@
+
+@*  
+    The form uses the LoginViewModel to bind the input fields for email, password, and remember me option.
+    The form posts to the Login action in the Account controller.
+    Anti-forgery token is included for security against CSRF attacks.
+    Register the model name as LoginViewModel to use it in the view.
+*@
+@model LoginViewModel;
+
+@*
+    The ViewData dictionary is used to pass data from the controller to the view. In this case, we are setting the "Title" key in the ViewData dictionary to "Change Password".
+    This value can be accessed in the layout or other parts of the view to display the title of the page.
+    
+    Lauout is set to the _AccountLayout.cshtml file, which provides a consistent look and feel for account-related pages.
+*@
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+@*
+    The form uses Bootstrap classes for styling and layout.
+    Validation messages are displayed in red to indicate errors.
+*@
+
+<div class="account-container">
+    <div class="account-box">
+        <h2 class="text-center mb-4">Login</h2>
+        @*
+                The form includes fields for email, password, and a remember me checkbox.
+                It also includes validation messages for each field.
+            *@
+        <form asp-action="Login" method="post">
+           @*
+                The form uses the POST method to submit the login credentials to the server.
+                The asp-action attribute specifies that the form should be submitted to the Login action in the Account controller.
+                Html.AntiForgeryToken():=> Generates a hidden anti-forgery token field to protect against cross-site request forgery (CSRF) attacks.
+           *@
+            @Html.AntiForgeryToken()
+            @*
+                The asp-validation-summary attribute is used to display validation errors for the model.
+                The ModelOnly option indicates that only model-level errors should be displayed, not property-level errors.
+            *@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*
+                The asp-for attribute is used to bind the input fields to the properties of the LoginViewModel.
+                The form includes labels and input fields for email and password, as well as a checkbox for the remember me option.
+            *@
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            @*
+                The "Forgot password?" link directs users to the VerifyEmail action in the Account controller.
+                This allows users to initiate the password reset process if they have forgotten their password.
+            *@
+            <div class="float-end">
+                <a asp-controller="Account" asp-action="VerifyEmail" class="text-decoration-none">
+                    Forgot password?
+                </a>
+            </div>
+            <div class="form-check mb-3">
+                <label class="form-check-label">
+                    <input asp-for="RememberMe" class="form-check-input" />
+                    @Html.DisplayNameFor(a => a.RememberMe)
+                </label>
+            </div>
+            <input type="submit" value="Login" class="btn btn-success w-100 p-2" />
+            <p class="text-center mt-2">
+                Don't have an account? <a asp-controller="Account" asp-action="Register" class="text-decoration-none">Register</a>
+            </p>
+            <div class="text-center">
+                <a asp-controller="Home" asp-action="Index" class="text-decoration-none mt-3">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}

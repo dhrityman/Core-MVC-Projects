@@ -1,0 +1,89 @@
+﻿@* Give the reference of the ChangePasswordViewModel class in the UserRoles.ViewModels namespace.*@
+﻿@using UserRoles.ViewModels;
+@*
+    The Register.cshtml file is a Razor view that represents the registration page in an ASP.NET Core application.
+    It is typically used to allow new users to create an account by providing their name, email, and password.
+    Register the model name as RegisterViewModel to use it in the view.
+*@
+@model RegisterViewModel;
+@*
+    The ViewData dictionary is used to pass data from the controller to the view. In this case, we are setting the "Title" key in the ViewData dictionary to "Register".
+    This value can be accessed in the layout or other parts of the view to display the title of the page.
+    
+    Layout is set to the _AccountLayout.cshtml file, which provides a consistent look and feel for account-related pages.
+*@
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<div class="account-container">
+    <div class="account-box">
+        <h2 class="text-center mb-4">Register</h2>
+        @*
+            The form includes fields for name, email, password, and confirm password.
+            It also includes validation messages for each field.
+            The form uses the POST method to submit the registration request to the server.
+            The asp-action attribute specifies that the form should be submitted to the Register action in the Account controller.
+            Html.AntiForgeryToken():=> Generates a hidden anti-forgery token field to protect against cross-site request forgery (CSRF) attacks.
+        *@
+        <form asp-action="Register" method="post">
+            @Html.AntiForgeryToken()
+            @*
+                The asp-validation-summary attribute is used to display validation errors for the model.
+                The ModelOnly option indicates that only model-level errors should be displayed, not property-level errors.
+            *@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*
+                The asp-for attribute is used to bind the input fields to the properties of the RegisterViewModel.
+                The form includes labels and input fields for name, email,PhoneNumber, password, and confirm password.
+            *@
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+             <div class="mb-3">
+                <label asp-for="PhoneNumber" class="form-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ConfirmPassword" class="form-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            @*
+                The submit button is styled as a Bootstrap button with the classes "btn btn-success w-100 p-2".
+                When clicked, it will submit the form and trigger the registration process.
+            *@
+            <input type="submit" value="Register" class="btn btn-success w-100 p-2" />
+            <p class="text-center mt-2">
+                Already have an account? <a asp-controller="Account" asp-action="Login" class="text-decoration-none">Login</a>
+            </p>
+            @*
+                The following section provides a link to navigate back to the home page.
+                 It is displayed below the registration form and centered horizontally.
+            *@
+            <div class="text-center">
+                <a asp-controller="Home" asp-action="Index" class="text-decoration-none mt-3">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}
