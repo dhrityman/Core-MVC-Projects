@@ -51,6 +51,8 @@ For Windows Authentication
 Package Manager Commands:
 1.  add-migration "Init"
 2.  update-database
+
+
 ----------------------------------------------------------------------------------------
 Razer class in Views/Shared folder like "_LoginPartial.cshtml" 
 Need to Start from YouTube Video "09 - Create Custom Login Page & Login Method"
