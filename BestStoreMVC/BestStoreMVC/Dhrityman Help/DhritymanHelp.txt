@@ -1,0 +1,176 @@
+﻿1.
+The Helping Video:
+https://www.youtube.com/watch?v=SfWuOFEatYc
+
+2. Connection String:
+"ConnectionStrings": {
+    "DefaultConnection": "Data Source=localhost;Initial Catalog=BestStoreDB;Integrated Security=True;Trust Server Certificate=True;"
+  }
+
+  3. Need to add nuGet packages to use Entity Framework Core 6.0.0 or higher for this project.
+  3.1 Microsoft.EntityFrameworkCore.SqlServer 10.0.10
+        Microsoft SQL Server database provider for Entity Framework Core.
+
+  3.2 Microsoft.EntityFrameworkCore.Tools  10.0.10
+      Enables these commonly used commands:
+        Add-Migration
+        Bundle-Migration
+        Drop-Database
+        Get-DbContext
+        Get-Migration
+        Optimize-DbContext
+        Remove-Migration
+        Scaffold-DbContext
+        Script-Migration
+        Update-Database
+  
+  
+  4. Create ApplicationDBContext Class to connect with the database by using Entity Framework Core. 
+  The class should inherit from Microsoft.EntityFrameworkCore.DbContext and include DbSet properties for each entity in the application.
+
+  5.Add this BestStoreMVC.Services.ApplicationDBContext to our service container in Program.cs file using the AddDbContext method.
+  Add the ApplicationDBContext to the service container and configure it to use SQL Server with the connection string from appsettings.json.
+
+
+  6. Create Domain Model or Entity Model named as "Product" in folder named "Models" in the project and add entity classes representing the database tables. 
+  Each class should have properties corresponding to the columns (along with its validation) in the respective table to read and write the database.
+
+  "System.ComponentModel.DataAnnotations" is used for it validation purpose.
+
+  7.
+  Add a DbSet for the ""Product"" model to the ApplicationDBContext class to enable you to perform basic CRUD (Create, Read, Update, Delete) operations against entities.
+  public DbSet<Models.Product> Products { get; set; }
+
+  8.
+  Run Package Manager Console and run the following command to create a migration for the initial database schema:
+  Add-Migration FirstMigration
+
+  9.
+  Run the following command to apply the migration and create the database:
+  update-database
+
+  10.
+
+  Run the following Database Querry in SQL Server Management Studio to check the database and table created by the migration:
+  Step 10.1: Go the Server Explorer in Visual Studio and connect to the database server.
+  Step 10.2: Expand the database node and check the tables created by the migration.
+  Step 10.3: Right-click on the table and select "View Data" to see the data in the table.
+  Step 10.4:Right Click on the table and select "New Query" to open a new query window.
+  Step 10.5: Copy and paste the following SQL query into the query window and execute it to insert sample data into the Products table.
+
+  INSERT INTO Products (name,Brand,Category,Price,Description,ImageFileName,CreatedAt) 
+VALUES
+    ('Wireless Mouse', 'Logitech', 'Electronics', 29.99, 'A high-precision wireless mouse with ergonomic design.', 'WireLessMouse01.jpg', SYSDATETIME()),
+    ('Wireless Mouse', 'Dell', 'Electronics', 30.99, 'A high-precision wireless mouse with ergonomic design.', 'WireLessMouse02.jpg', SYSDATETIME()),
+    ('Wireless Mouse', 'LG', 'Electronics', 31.99, 'A high-precision wireless mouse with ergonomic design.', 'WireLessMouse03.jpg', SYSDATETIME()),
+
+    ('Bluetooth Headphones', 'Sony', 'Electronics', 99.99, 'Noise-cancelling over-ear headphones with long battery life.', 'BluetoothHeadphone01.jpg', SYSDATETIME()),
+    ('Bluetooth Headphones', 'Samsung', 'Electronics', 100.99, 'Noise-cancelling over-ear headphones with long battery life.', 'BluetoothHeadphone02.jpg', SYSDATETIME()),
+    ('Bluetooth Headphones', 'Apple', 'Electronics', 101.99, 'Noise-cancelling over-ear headphones with long battery life.', 'BluetoothHeadphone03.jpg', SYSDATETIME()),
+
+    ('Smartphone', 'Apple', 'Electronics', 999.99, 'Latest model with advanced features and high-resolution camera.', 'SmartPhone01.jpg', SYSDATETIME()),
+    ('Smartphone', 'Samsung', 'Electronics', 1000.99, 'Latest model with advanced features and high-resolution camera.', 'SmartPhone02.jpg', SYSDATETIME()),
+    ('Smartphone', 'Nokia', 'Electronics', 899.99, 'Latest model with advanced features and high-resolution camera.', 'SmartPhone03.jpg', SYSDATETIME()),
+
+    ('Gaming Laptop', 'Dell', 'Computers', 1299.99, 'High-performance laptop designed for gaming and multimedia.', 'gaming_laptop.jpg', SYSDATETIME()),
+    ('Gaming Laptop', 'Lenavo', 'Computers', 1399.99, 'High-performance laptop designed for gaming and multimedia.', 'gaming_laptop.jpg', SYSDATETIME()),
+    ('Gaming Laptop', 'HP', 'Computers', 1499.99, 'High-performance laptop designed for gaming and multimedia.', 'gaming_laptop.jpg', SYSDATETIME()),
+
+    ('4K Monitor', 'Samsung', 'Electronics', 399.99, 'Ultra HD monitor with vibrant colors and fast refresh rate.', '4K Monitor 01.JPG', SYSDATETIME()),
+    ('4K Monitor', 'LG', 'Electronics', 499.99, 'Ultra HD monitor with vibrant colors and fast refresh rate.', '4K Monitor 02.JPG', SYSDATETIME()),
+    ('4K Monitor', 'HP', 'Electronics', 599.99, 'Ultra HD monitor with vibrant colors and fast refresh rate.', '4K Monitor 03.JPG', SYSDATETIME());
+
+
+  11.
+  Create BestStoreMVC.Controllers.ProductsController
+
+  12.
+  Right click on ProductsController.Index() method, and add view, add Empty Razor view.
+  After adding a Empty Razore view named Index.cshtml, you will see a new view file added with the name as Index.cshtml under View=> Product folder.
+
+  13.
+  Now in the Index Action (ProductsController.Index()) we need to read the list of Products from the database and we have to pass this list to the view.
+  Now to read the data from the database, we need our Application DB context (BestStoreMVC.Services.ApplicationDBContext) 
+  that we already add to the service container and request it from service container, we need to create Constructor BestStoreMVC.Controllers.ProductsController.
+  and inject the ApplicationDBContext into the constructor of the ProductsController class. 
+  This will allow us to access the database context and perform CRUD operations on the Product entity.
+
+
+  14.
+  In the Index Action (ProductsController.Index()), we will use the ApplicationDBContext to retrieve the list of products from the database and pass it to the view.
+  Now in the Index Action (ProductsController.Index()) we need to read the list of Products from the database and we have to pass this list to the view.
+  Now to read the data from the database, we need our Application DB context(BestStoreMVC.Services.ApplicationDBContext)
+  that we already add to the service container and request it from service container, we need to create Constructor BestStoreMVC.Controllers.ProductsController.
+  and inject the ApplicationDBContext into the constructor of the ProductsController class. 
+  This will allow us to access the database context and perform CRUD operations on the Product entity.
+  To read the Product list in the view pass the list of products to the view, 
+  we can use the ToList() method of the DbSet<Product> property of the ApplicationDBContext class.
+
+
+  15.
+  STEP 15.1:
+  In the Index.cshtml view, add model declaration at the top of the file to specify that the view will be using a list of Product objects.
+  @model IEnumerable<BestStoreMVC.Models.Product>
+  
+  STEP 15.2:
+    Create a heading for the page that says "List of Products" and center it using Bootstrap classes. Add a margin-bottom of 5 units to the heading.
+
+  STEP 15.3:
+        Add a button to create a new product. The button will be linked to the 'Create' action of the ProductsController.
+
+  STEP 15.4:
+  Add the Page (Index.cshtml) body to display the list of products in a table format. Use Bootstrap classes to style the table and make it responsive.
+
+  16:
+  Now to need add a navigation link to the Products page in the _Layout.cshtml file. 
+  This will allow users to easily navigate to the Products page from any other page in the application.
+    <li class="nav-item">
+           <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+   </li>
+
+  17.
+  Now we are going to create a new Product, so create a new product, create a new model class of Type DTO (Data Transfer Object) named as "ProductDTO" in the folder named "Models" in the project and add properties for each field that we want to include in the form. 
+  Which allow to user to submit the product details to the server. This class will be used to transfer data between the view and the controller.
+  Decorate the required properties with the [Required] attribute to ensure that the user provides values for those fields.
+  To upload actual image file, we need to add a property of type IFormFile in the ProductDTO class. This property will be used to handle the uploaded image file from the form.
+
+  18.
+    Create a new action method named "Create" in the ProductsController class to handle the Create operation. 
+    This action method will be responsible for displaying the form to create a new product and handling the form submission.
+
+  19.
+  Create new view named "Create.cshtml" in the Views/Products folder to display the form for creating a new product.
+  Right click on ProductsController.Create() method, and add view, add Empty Razor view named as "Create.cshtml".
+  After adding a Empty Razore view named Create.cshtml, you will see a new view file added with the name as Create.cshtml 
+  under View=> Product folder. 
+  
+  STEP 19.1: Register the model class (ProductDTO) in the Create.cshtml view to bind the form fields to the properties of the ProductDTO class.
+  We need it because we need to bind witht the form (Create.cshtml) fields to the properties of the ProductDTO class.
+
+  STEP 19.2:Add the Form body of Create.cshtml.
+
+  STEP 19.3: Add the form submission logic in the Create action method of the ProductsController class to handle the form submission and save the new product to the database.
+        STEP 19.3.1: Create [HttpPost] method for 'Create' at ProductsController.
+        STEP 19.3.2: Add validation logic to check if the model state is valid. If not, return the view with the validation errors.
+        STEP 19.3.3: If the model state is valid, create a new Product entity and populate its properties with the values from the ProductDTO object.
+        Step 19.3.4: First need to save the Product Image file to the server. To do this, we need to check if the IFormFile property of the ProductDTO object is not null and has a valid file name.
+            *       If it does, we can generate a unique file name for the image file and save it to a specific folder on the server using the IFormFile.CopyTo() method.
+            *       Save the new Product entity to the database using the ApplicationDBContext and call SaveChanges() to persist the changes.
+            *       1. Add a parameter in the contructor of Type IwebHostEnvironment to the Create action method to get the path of the wwwroot folder.
+            *       2. Create a unique name of file name of the Product Image file to avoid overwriting existing files with the same name.
+            *       3. Get the full path of the Product Image file by combining the wwwroot folder path, the folder name where the images will be stored, and the unique file name.
+            *       4. Create a new FileStream object with the full path and FileMode.Create to create a new file or overwrite an existing file with the same name.
+            *       5. Use the IFormFile.CopyTo() method to copy the contents of the uploaded image file to the new file stream, which will save the file to the server.
+            *       6. Create a new Product entity and populate its properties with the data from the ProductDTO object, including the unique file name of the uploaded image to save in database.
+            *       7. Save the new Product entity to the database using the ApplicationDBContext and call SaveChanges() to persist the changes.
+
+    STEP 19.3: After successfully creating the product, redirect the user to the Index action of the ProductsController to display the list of products.
+
+
+  20.
+  Steps to run the project:
+   - Open the project in Visual Studio.
+   - Restore NuGet packages.
+   - Update the connection string in appsettings.json if necessary.
+   - Build the solution.
+   - Run the application.

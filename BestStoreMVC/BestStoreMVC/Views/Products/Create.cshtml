@@ -1,0 +1,146 @@
+﻿@*
+    STEP 19.1: Register the model class (ProductDTO) in the 'Create.cshtml' view to bind the form fields to the properties of the ProductDTO class.
+    'Create.cshtml' view is responsible to give facility to register new product with in the system. 
+    The model class (ProductDTO) is used to represent the data structure of the product being created. 
+    By registering the model class in the view, we can bind the form fields to the properties of the ProductDTO class, 
+    allowing us to capture user input and create a new product object when the form is submitted.
+*@
+@{
+}
+@*STEP 19.1: Register the model class (ProductDTO) in the Create.cshtml view to bind the form fields to the properties of the ProductDTO class
+      We need it because we need to bind witht the form (Create.cshtml) fields to the properties of the ProductDTO class.
+*@
+@model BestStoreMVC.Models.ProductDTO
+@*STEP 19.2:Add the Form body of Create.cshtml*@
+@*Step19.2.1: Create a row*@
+<div class="row">
+    @*Step19.2.1.1: 
+        1. col-md-8:=> This class is used to define a column that takes up 8 out of 12 columns in a medium-sized (md) viewport or larger.
+        2. mx-auto:=> This class is used to center the column horizontally within its parent container. It applies automatic left and right margins to the column, effectively 'centering it on the page'.
+        3. rounded:=> This class is used to apply 'rounded corner's to the column, giving it a softer and more visually appealing appearance.
+        4. border:=> This class is used to add a 'border'' around the column, providing a visual separation from the surrounding content.
+        5. p-3:=> This class is used to add 'padding'' of 3 units (usually 1rem) to all sides of the column, creating space between the content and the border.
+    *@
+    <div class="col-md-8 mx-auto rounded border p-3">
+        @*Step19.2.1.1.1: Create a heading for the page that says "Create New Product" and center it using Bootstrap classes. Add a margin-bottom of 4 units to the heading.
+        1. h2:=> This is an HTML heading element that represents a level 2 heading. It is used to display the title of the page, which is "Create New Product" in this case.    
+        2. text-center:=> This class is used to center the text horizontally within the heading element.
+        3. mb-5:=> This class is used to add a margin-bottom of 5 units (usually 3rem) to the heading, creating space between the heading and the form below it.
+        *@
+        <h2 class="text-center mb-5">Create New Product</h2>
+        @*
+            Step19.2.1.1.2:=>
+            1. asp-action="Create":=> This attribute specifies the action method in the controller that will handle the form submission. 
+                                      In this case, it is set to "Create", which means that when the form is submitted, it will be sent to the "Create" action method in the corresponding controller.
+            2. method="post":=> This attribute specifies the HTTP method to be used when submitting the form.
+            3. enctype="multipart/form-data":=> This attribute specifies the encoding type (multipart/form-data) for the form data.
+        *@
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            @*
+                 Step19.2.1.1.3:=> For the Field name ="Name" of ProductDTO class, we need to create a form group with label, input field, and validation message.
+                   1. <div class="mb-3">:=> This class is used to create a margin-bottom of 3 units (usually 1rem) for each form group, providing spacing between the input fields.
+                   2. class="col-sm-4 col-form-label":=> This class is used to style the label element as a form label and specify that it should take up 4 columns in a small-sized (sm) viewport or larger. 
+                        It also applies appropriate styling and spacing to the label.
+                   3. class="form-control":=> This class is used to style the input element as a form control, applying appropriate styling and spacing.
+                   4. asp-for:=> This attribute is used to bind the input field to a specific property of the model (ProductDTO). 
+                        It automatically generates the appropriate name and id attributes for the input field based on the property name.
+                   5. <span asp-validation-for="Name" class="text-danger">:=> This span element is used to display validation error messages for the "Name" property. 
+                        The asp-validation-for attribute binds the span to the corresponding property, and the class="text-danger" applies a red color to the error message.
+            *@
+            <div class="row col-sm-8">
+                <label class="col-sm-4 col-form-label">Name</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            @*
+                Step19.2.1.1.4:=> For the Field name ="Brand" of ProductDTO class, we need to create a form group with label, input field, and validation message.
+            *@
+            <div class="row col-sm-8">
+                <label class="col-sm-4 col-form-label">Brand</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Brand" />
+                    <span asp-validation-for="Brand" class="text-danger"></span>
+                </div>
+            </div>
+             @*
+                Step19.2.1.1.5:=> For the Field name ="Category" of ProductDTO class, we need to create a form group with label, input field, and validation message.
+                Selection of category is done by using <select> tag with <option> tags for each category.
+
+                1. class="col-sm-4 col-form-label":=> This class is used to style the label element as a form label and specify that it should take up 4 columns in a small-sized (sm) viewport or larger. 
+                    It also applies appropriate styling and spacing to the label.
+                2. <select asp-for="Category" class="form-select">:=> This is a select element that allows the user to choose a category from a dropdown list. 
+                    The asp-for attribute binds the select element to the "Category" property of the model (ProductDTO). 
+                    The class="form-select" applies Bootstrap styling to the select element.
+            *@
+            <div class="row col-sm-8">
+                <label class="col-sm-4 col-form-label">Category</label>
+                <div class="col-sm-8">
+                    <select asp-for="Category" class="form-select">
+                        <option value="">Select a category</option>
+                        <option value="Wireless Mouse">Wireless Mouse</option>
+                        <option value="Bluetooth Headphones">Bluetooth Headphones</option>
+                        <option value="Smartphone">Smartphone</option>
+                        <option value="Gaming Laptop">Gaming Laptop</option>
+                        <option value="4K Monitor">4K Monitor</option>
+                    </select>
+                    <span asp-validation-for="Category" class="text-danger"></span>
+                </div>            
+            </div>
+
+            @*
+                Step19.2.1.1.6:=> For the Field name ="Price" of ProductDTO class, we need to create a form group with label, input field, and validation message.
+            *@
+            <div class="row col-sm-8">
+                <label class="col-sm-4 col-form-label">Price</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Price" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+            </div>
+            @*
+                Step19.2.1.1.7:=> For the Field name ="Description" of ProductDTO class, we need to create a form group with label, input field, and validation message.
+            *@
+            <div class="row col-sm-8">
+                <label class="col-sm-4 col-form-label">Description</label>
+                <div class="col-sm-8">
+                    <textarea class="form-control" asp-for="Description" ></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+            @*
+                Step19.2.1.1.8:=> For the Field name ="Image" of ProductDTO class, we need to create a form group with label, input field, and validation message.
+                1. class="col-sm-4 col-form-label":=> This class is used to style the label element as a form label and specify that it should take up 4 columns in a small-sized (sm) viewport or larger. 
+                    It also applies appropriate styling and spacing to the label.
+                2. <input asp-for="ImageFile" type="file" class="form-control" />:=> This is an input element of type "file" that allows the user to select a file from their device.
+            *@
+            <div class="row col-sm-8">
+                <label class="col-sm-4 col-form-label">Product Image</label>
+                <div class="col-sm-8">
+                    <input asp-for="ImageFile" type="file" class="form-control" />
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </div>             
+            </div>
+            @* 
+                Step19.2.1.1.9:=>Add the following Buttons to the form: Submit and Cancel buttons. 
+                The Submit button will submit the form data to the server, while the Cancel button will redirect the user back to the Index page of the Products controller.
+                1. <div class="row">:=> This class is used to create a new row in the Bootstrap grid system, allowing us to place the buttons side by side.
+                2. <div class="offset-sm-4 col-sm-4 d-grid">:=> This class is used to create a column that takes up 4 out of 12 columns.
+                3. <button type="submit" class="btn btn-primary">Submit</button>:=> This is a submit button that will trigger the form submission when clicked. 
+                    The class="btn btn-primary" applies Bootstrap styling to the button, giving it a primary color and appearance.
+                4. <a asp-action="Index" role="button" asp-controller="Products" class="btn btn-outline-primary">:=> This is a link that acts as a button, redirecting the user to the Index action of the Products controller when clicked. 
+                    The class="btn btn-outline-primary" applies Bootstrap styling to the link, giving it an outlined primary color and appearance.
+            *@
+            <div class="row  col-sm-8">
+                <div class="offset-sm-4 col-sm-4 d-grid">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                <div class="col-sm-4 d-grid">
+                    <a class="btn btn-outline-primary" asp-controller="Products" asp-action="Index" role="button">Cancel</a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

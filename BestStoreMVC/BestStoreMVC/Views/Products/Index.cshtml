@@ -1,0 +1,78 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    STEP 12:
+    Right click on ProductsController.Index() method, and add view, add Empty Razor view.
+  After adding a Empty Razore view named Index.cshtml, you will see a new view file added with the name as Index.cshtml under View=> Product folder.
+*@
+
+@*
+    STEP 15.1:
+    In the Index.cshtml view, add model declaration at the top of the file to specify that the view will be using a list of Product objects.  
+*@
+@model IEnumerable<BestStoreMVC.Models.Product>
+@{
+}
+
+@*
+    STEP 15.2:
+    Create a heading for the page that says "List of Products" and center it using Bootstrap classes. Add a margin-bottom of 5 units to the heading.
+*@
+<h2 class="text-center mb-5">List of Products</h2>
+
+<div class="row mb-5">
+    @*
+        STEP 15.3:
+        Add a button to create a new product. The button will be linked to the 'Create'' action of the ProductsController.
+    *@
+    <div class="col">
+        <a class="btn btn-primary" asp-controller="Products" asp-action="Create">Create New Product</a>
+    </div>
+    <div class="col">
+
+    </div>
+</div>
+
+@* STEP 15.4: Add the Page (Index.cshtml) body to display the list of products in a table format. Use Bootstrap classes to style the table and make it responsive.*@
+    <table class="table table-striped">
+        <thead>
+            <tr>
+            @* Add Header Columns for ID, Name, Brand, Categorye, Price, Image, Created At  *@
+                <th>ID</th>
+                <th>Name</th>
+                <th>Brand</th>
+                <th>Categorye</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Created At</th>
+                @* Add Action form Edit and Delete Buttons*@
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    @*Model.PropertyName*@
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Brand</td>
+                    <td>@product.Category</td>
+                    <td>@(product.Price)£</td>
+                    <td>
+                        @* Display the product image if it exists. *@
+                        @if (!string.IsNullOrEmpty(product.ImageFileName))
+                        {
+                        <img src="@Url.Content($"~/Products_Images/{product.ImageFileName}")" alt="@product.Name" width="100" />
+                        @*Root Folder/Image Folder(Products_Images)/Image FileName in Database*@
+                        @* <img src="/Products_Images/@product.ImageFileName" width="100" /> *@
+                        }
+                    <td>@product.CreatedAt.ToString("MM/dd/yyyy")</td>
+                    <td style="white-space:nowrap">
+                        @* STEP 15.4: Add Edit and Delete buttons for each product. *@
+                        <a class="btn btn-warning" asp-controller="Products" asp-action="Edit" asp-route-id="@product.Id">Edit</a>
+                        <a class="btn btn-danger" asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
