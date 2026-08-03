@@ -1,0 +1,6 @@
+You Tube Video:
+https://www.youtube.com/watch?v=etbSwi-lOCY
+
+
+GitHub Repository:
+https://github.com/CodAffection/Expense-Tracker-App-in-Asp.Net-Core-MVC/tree/main
