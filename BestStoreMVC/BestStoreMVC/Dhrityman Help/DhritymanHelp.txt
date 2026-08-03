@@ -200,10 +200,25 @@ VALUES
 
  -----------------------------------------------
  To Delete a existing Product, do the following steps:
-
-
+ STEP 21:
+ STEP 21.1: Add onclick confirmation dialog to the Delete button in the Index.cshtml view to confirm the deletion of the product before proceeding with the delete operation.
+ STEP 21.2:
+ Create a new action method named "Delete" in the ProductsController class to handle the Delete operation. 
+    This action method will be responsible for displaying the confirmation page to delete an existing product and handling the form submission.
+    This will calls from on Delete button click in the Index.cshtml view. It will pass the ID of the product to be deleted as a parameter to the Delete action method.
+  STEP 21.3: Check the Product is exist in the database or not, if not then return NotFound() result.
+  If it exists, retrieve the existing Product entity from the database using its ID and pass it to the Delete.cshtml view to display the 
+  product details for confirmation before deletion.this is due to the concurrency checking. If the product is deleted by another user, 
+  then it will return NotFound() result.
+  
+  STEP 21.4: If product found, Delete the Image file from the server using the ImageFileName property of the Product entity. 
+  This will ensure that the image file is removed from the server when the product is deleted.If the same Image file is used by another product, 
+  then it will not delete the image file from the server. It will only delete the image file if it is not used by any other product.
+  
+  STEP 21.5: Delete the object from Databse using ApplicationDBContext and call SaveChanges() to persist the changes.
+  STEP 21.6: After successfully deleting the product, redirect the user to the Index action of the ProductsController to display the list of products.
  -----------------------------------------------
-  21.
+  22.
   Steps to run the project:
    - Open the project in Visual Studio.
    - Restore NuGet packages.

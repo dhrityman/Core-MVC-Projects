@@ -30,10 +30,10 @@ namespace BestStoreMVC.Controllers
         /// </summary>
         /// <param name="context"></param>
         /// <param name="environment">object of IWebHostEnvironment type, to provide the Web host environment</param>
-        public ProductsController(ApplicationDBContext context, IWebHostEnvironment environment) 
+        public ProductsController(ApplicationDBContext context, IWebHostEnvironment environment)
         {
-          this.Context = context;
-          this.environment = environment;
+            this.Context = context;
+            this.environment = environment;
 
         }
 
@@ -59,7 +59,7 @@ namespace BestStoreMVC.Controllers
             /*To Display in acending Order by ID */
             //var products = this.Context.Products.ToList();
             /*To Display in decending Order by ID */
-            var products = this.Context.Products.OrderByDescending(p =>p.Id).ToList();
+            var products = this.Context.Products.OrderByDescending(p => p.Id).ToList();
             /*
              * Right click on ProductsController.Index() method, and add view, add Empty Razor view.
              * After adding a Empty Razore view named 'Index.cshtml', you will see a new view file added with the name as Index.cshtml 
@@ -83,7 +83,7 @@ namespace BestStoreMVC.Controllers
              * STEP 14: Now in the Create Action (ProductsController.Create()) we need to create a new Product in the database and we have to pass this Product calss with created ID from database to the view.
              */
             var productDTO = new ProductDTO();
-            
+
             /*
              * Right click on ProductsController.Index() method, and add view, add Empty Razor view named as "Create.cshtml".
              * After adding a Empty Razore view named Create.cshtml, you will see a new view file added with the name as Create.cshtml 
@@ -120,9 +120,9 @@ namespace BestStoreMVC.Controllers
             // This will ensure that the user is informed about the issue and can correct it before resubmitting the form.
             if (productDTO.ImageFile == null || productDTO.ImageFile.Length == 0)
             {
-                  ModelState.AddModelError("ImageFile", "Please upload an image file with valid file extension.");
+                ModelState.AddModelError("ImageFile", "Please upload an image file with valid file extension.");
             }
-            if(productDTO.Price < 0.01m)
+            if (productDTO.Price < 0.01m)
             {
                 ModelState.AddModelError("Price", "Price must be greater than 0.00");
             }
@@ -144,9 +144,9 @@ namespace BestStoreMVC.Controllers
              *       6. Create a new Product entity and populate its properties with the data from the ProductDTO object, including the unique file name of the uploaded image to save in database.
              *       7. Save the new Product entity to the database using the ApplicationDBContext and call SaveChanges() to persist the changes.
              */
-            string uniqueFileName = "ProductImage-" + DateTime.Now.ToString("yyyyMMddHHmmssfff");            
-            uniqueFileName= uniqueFileName + Path.GetExtension(productDTO.ImageFile!.FileName);
-            string imageFullPath = environment.WebRootPath+ "/Products_Images/"+ uniqueFileName;
+            string uniqueFileName = "ProductImage-" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
+            uniqueFileName = uniqueFileName + Path.GetExtension(productDTO.ImageFile!.FileName);
+            string imageFullPath = environment.WebRootPath + "/Products_Images/" + uniqueFileName;
 
             using (var stream = new FileStream(imageFullPath, FileMode.Create))
             {
@@ -155,15 +155,15 @@ namespace BestStoreMVC.Controllers
             }
 
             /// Create a new Product entity and populate its properties with the data from the ProductDTO object, including the unique file name of the uploaded image to save in database.
-            Product product =new Product()
+            Product product = new Product()
             {
                 Name = productDTO.Name,
-                Brand = productDTO.Brand, 
-                Category = productDTO.Category, 
-                Description = productDTO.Description,                  
-                Price = productDTO.Price, 
-                ImageFileName = uniqueFileName, 
-                CreatedAt = DateTime.Now 
+                Brand = productDTO.Brand,
+                Category = productDTO.Category,
+                Description = productDTO.Description,
+                Price = productDTO.Price,
+                ImageFileName = uniqueFileName,
+                CreatedAt = DateTime.Now
             };
 
             ///Save in Database using ApplicationDBContext and call SaveChanges() to persist the changes.
@@ -171,7 +171,7 @@ namespace BestStoreMVC.Controllers
             this.Context.SaveChanges();
 
             /// After successfully creating the product, redirect the user to the Index action of the ProductsController to display the list of products.
-            return RedirectToAction("Index","Products");            
+            return RedirectToAction("Index", "Products");
         }
 
         #endregion Add new Action named Create On Click on Submit button of Create.cshtml, to save the new product in database.
@@ -180,6 +180,11 @@ namespace BestStoreMVC.Controllers
 
         #region Add new Action named Edit On Load Create.cshtml on the click of Button (Edit) on Index.cshtml, to load fill the existing product details from the database.
 
+        /// <summary>
+        /// Add new Action named Edit On Load Create.cshtml on the click of Button (Edit) on Index.cshtml, to load fill the existing product details from the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Edit(int id)
         {
             // Retrieve the product from the database based on the provided ID
@@ -222,16 +227,16 @@ namespace BestStoreMVC.Controllers
         /// <param name="productDTO"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Edit(int id,ProductDTO productDTO)
+        public IActionResult Edit(int id, ProductDTO productDTO)
         {
             // Retrieve the product from the database based on the provided ID
             var product = this.Context.Products.Find(id);
             // If the product is not found, return a NotFound result
             if (product == null)
-            {                
+            {
                 return RedirectToAction("Index", "Products");
             }
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 ViewData["ProductId"] = product.Id; // Pass the Product ID to the view for reference
                 ViewData["ImageFileName"] = product.ImageFileName; // Pass the existing image file name to the view for display]
@@ -271,18 +276,62 @@ namespace BestStoreMVC.Controllers
             product.Price = productDTO.Price;
             product.ImageFileName = newFileName;
 
-            //this.Context.Products.Update(product);
+            this.Context.Products.Update(product);
 
             // Save the changes to the database
-            this.Context.SaveChanges(); 
+            this.Context.SaveChanges();
             // Redirect to the Index action of the ProductsController after successful update
-            return RedirectToAction("Index", "Products"); 
+            return RedirectToAction("Index", "Products");
 
             #endregion Update the Product details in Database
 
         }
         #endregion Add new Action named Edit On Click on Submit button of Edit.cshtml, to save the updated product in database.
 
+        #region Delete a product from the database.
 
+
+        /// <summary>
+        /// Deletes a product from the database based on the provided ID. It retrieves the product, deletes its associated image file from the server, removes the product from the database, and saves the changes. After successful deletion, 
+        /// it redirects to the Index action of the ProductsController to display the updated list of products.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IActionResult Delete(int id)
+        {
+            // Retrieve the product from the database based on the provided ID
+            var product = this.Context.Products.Find(id);
+
+            // If the product is not found, return a NotFound result
+            if (product == null)
+            {
+                return RedirectToAction("Index", "Products");
+            }
+
+            // Delete the product image from the server
+            /* Check if any other product is using the same image file name before deleting the image file from the server, due to ssed data
+             * it is possible that multiple products may share the same image file name. If we delete the image file without checking, 
+             * it may result in broken image links for other products that are still using that image.
+             */
+            Product productWithSameImageFileName = this.Context.Products.FirstOrDefault(p => (p.ImageFileName == product.ImageFileName && p.Id != product.Id));
+            //product.ImageFileName.Count();
+            if (productWithSameImageFileName == null)
+            {
+                string imageFullPath = environment.WebRootPath + "/Products_Images/" + product.ImageFileName;
+                if (System.IO.File.Exists(imageFullPath))
+                {
+                    System.IO.File.Delete(imageFullPath);
+                }
+            }
+
+            // Remove the product from the database
+            this.Context.Products.Remove(product);
+            this.Context.SaveChanges(true);
+
+            /// After successfully deleting the product, redirect the user to the Index action of the ProductsController to display the updated list of products.
+            return RedirectToAction("Index", "Products");
+        }
+
+        #endregion Delete a product from the database.
     }
 }
