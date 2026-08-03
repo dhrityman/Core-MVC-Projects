@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.Data;
+using System.Reflection.Metadata.Ecma335;
 
 namespace BestStoreMVC.Controllers
 {
@@ -56,9 +57,9 @@ namespace BestStoreMVC.Controllers
              * we can use the ToList() method of the DbSet<Product> property of the ApplicationDBContext class.
              */
             /*To Display in acending Order by ID */
-            var products = this.Context.Products.ToList();
+            //var products = this.Context.Products.ToList();
             /*To Display in decending Order by ID */
-            //var products = this.Context.Products.OrderByDescending(p =>p.Id).ToList();
+            var products = this.Context.Products.OrderByDescending(p =>p.Id).ToList();
             /*
              * Right click on ProductsController.Index() method, and add view, add Empty Razor view.
              * After adding a Empty Razore view named 'Index.cshtml', you will see a new view file added with the name as Index.cshtml 
@@ -66,6 +67,10 @@ namespace BestStoreMVC.Controllers
              */
             return View(products);
         }
+
+        #region Create a new product.
+
+        #region Add new Action named Create On Load Create.cshtml on the click of Button (Create New Product) on Index.cshtml, to load empty page to register a new product in database.
 
         /// <summary>
         /// STEP 18: Create a new action method named "Create" in the ProductsController class to handle the Create operation at the time of Page load "Create.cshtml". 
@@ -87,6 +92,10 @@ namespace BestStoreMVC.Controllers
             return View(productDTO);
         }
 
+        #endregion Add new Action named Create On Load Create.cshtml on the click of Button (Create New Product) on Index.cshtml, to load empty page to register a new product in database.
+
+        #region Add new Action named Create On Click on Submit button of Create.cshtml, to save the new product in database.
+
         /// <summary>
         /// Handles HTTP POST requests to create a new resource product of view Create.cshtml and Model ProductDTO.
         /// </summary>
@@ -95,6 +104,7 @@ namespace BestStoreMVC.Controllers
         [HttpPost]
         public IActionResult Create(ProductDTO productDTO)
         {
+            #region commented code
             //if (productDTO.ImageFile != null && productDTO.ImageFile.Length > 0)
             //{
             //    // Save the uploaded image file to a specific location
@@ -104,7 +114,7 @@ namespace BestStoreMVC.Controllers
             //        productDTO.ImageFile.CopyTo(stream);
             //    }
             //}
-            
+            #endregion commented code
 
             // Check if the uploaded file is null or has a length of 0, and add a model error if it does.
             // This will ensure that the user is informed about the issue and can correct it before resubmitting the form.
@@ -161,9 +171,118 @@ namespace BestStoreMVC.Controllers
             this.Context.SaveChanges();
 
             /// After successfully creating the product, redirect the user to the Index action of the ProductsController to display the list of products.
-            return RedirectToAction("Index","Products");
-            // return View();
+            return RedirectToAction("Index","Products");            
         }
+
+        #endregion Add new Action named Create On Click on Submit button of Create.cshtml, to save the new product in database.
+
+        #endregion Create a new product.
+
+        #region Add new Action named Edit On Load Create.cshtml on the click of Button (Edit) on Index.cshtml, to load fill the existing product details from the database.
+
+        public IActionResult Edit(int id)
+        {
+            // Retrieve the product from the database based on the provided ID
+            var product = this.Context.Products.FirstOrDefault(p => p.Id == id);
+            // If the product is not found, return a NotFound result
+            if (product == null)
+            {
+                //return NotFound();
+                return RedirectToAction("Index", "Products");
+            }
+            // Create a ProductDTO object and populate it with the existing product details
+            var productDTO = new ProductDTO
+            {
+                Name = product.Name,
+                Brand = product.Brand,
+                Category = product.Category,
+                Price = product.Price,
+                Description = product.Description,
+                // Note: ImageFile is not populated here as it's for new uploads only
+            };
+
+            ViewData["ProductId"] = product.Id; // Pass the Product ID to the view for reference
+            ViewData["ImageFileName"] = product.ImageFileName; // Pass the existing image file name to the view for display]
+            ViewData["CreatedAt"] = product.CreatedAt.ToString("MM/dd/yyyy"); // Pass the created date to the view for display]
+            // Pass the ProductDTO to the Edit view to pre-fill the form with existing details
+            return View(productDTO);
+        }
+
+        #endregion  Add new Action named Edit On Load Create.cshtml on the click of Button (Edit) on Index.cshtml, to load fill the existing product details from the database.
+
+        #region Add new Action named Edit On Click on Submit button of Edit.cshtml, to save the updated product in database.
+
+        /// <summary>
+        /// This action method handles the HTTP POST request for editing an existing product call at Submit button call on Edit.cshtml view.
+        /// It retrieves the product from the database based on the provided ID, updates its details with the data from the ProductDTO object, 
+        /// and saves the changes to the database. If a new image file is uploaded, it updates the image on the server and deletes the old image. 
+        /// Finally, it redirects to the Index action of the ProductsController after a successful update.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="productDTO"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult Edit(int id,ProductDTO productDTO)
+        {
+            // Retrieve the product from the database based on the provided ID
+            var product = this.Context.Products.Find(id);
+            // If the product is not found, return a NotFound result
+            if (product == null)
+            {                
+                return RedirectToAction("Index", "Products");
+            }
+            if(!ModelState.IsValid)
+            {
+                ViewData["ProductId"] = product.Id; // Pass the Product ID to the view for reference
+                ViewData["ImageFileName"] = product.ImageFileName; // Pass the existing image file name to the view for display]
+                ViewData["CreatedAt"] = product.CreatedAt.ToString("MM/dd/yyyy"); // Pass the created date to the view for display]
+
+                return View(productDTO);
+            }
+
+            #region Update the Image on Server and Delete the Old Image from Server
+            // Update the product image, if we have a new file image.
+            string newFileName = product.ImageFileName; // Keep the existing image file name by default
+            if (productDTO.ImageFile != null && productDTO.ImageFile.Length > 0)
+            {
+
+                string uniqueFileName = "ProductImage-" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
+                newFileName = uniqueFileName + Path.GetExtension(productDTO.ImageFile!.FileName);
+                string imageFullPath = environment.WebRootPath + "/Products_Images/" + newFileName;
+
+                using (var stream = new FileStream(imageFullPath, FileMode.Create))
+                {
+                    /// Save the uploaded image file to the specified path on the server.
+                    productDTO.ImageFile.CopyTo(stream);
+                }
+
+                string oldImageFullPath = environment.WebRootPath + "/Products_Images/" + product.ImageFileName;
+                System.IO.File.Delete(oldImageFullPath); // Delete the old image file from the server
+            }
+
+            #endregion Update the Image on Server and Delete the Old Image from Server
+
+            #region Update the Product details in Database
+
+            product.Name = productDTO.Name;
+            product.Brand = productDTO.Brand;
+            product.Category = productDTO.Category;
+            product.Description = productDTO.Description;
+            product.Price = productDTO.Price;
+            product.ImageFileName = newFileName;
+
+            //this.Context.Products.Update(product);
+
+            // Save the changes to the database
+            this.Context.SaveChanges(); 
+            // Redirect to the Index action of the ProductsController after successful update
+            return RedirectToAction("Index", "Products"); 
+
+            #endregion Update the Product details in Database
+
+        }
+        #endregion Add new Action named Edit On Click on Submit button of Edit.cshtml, to save the updated product in database.
+
 
     }
 }
