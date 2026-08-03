@@ -127,7 +127,8 @@ VALUES
     <li class="nav-item">
            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
    </li>
-
+   --------------------------------------------------------------------------------------------------
+   To Create a new Product, do the following steps:
   17.
   Now we are going to create a new Product, so create a new product, create a new model class of Type DTO (Data Transfer Object) named as "ProductDTO" in the folder named "Models" in the project and add properties for each field that we want to include in the form. 
   Which allow to user to submit the product details to the server. This class will be used to transfer data between the view and the controller.
@@ -166,8 +167,58 @@ VALUES
 
     STEP 19.3: After successfully creating the product, redirect the user to the Index action of the ProductsController to display the list of products.
 
+-----------------------------------------------
+ To Edit or update a existing Product, do the following steps:
+ 
+ 20.
+ STEP 20.1: Create a new action method named "Edit" in the ProductsController class to handle the Edit operation. 
+    This action method will be responsible for displaying the form to edit an existing product and handling the form submission.
+  
+  STEP 20.2: Create new view named "Edit.cshtml" in the Views/Products folder to display the form for editing an existing product.
+  Right click on ProductsController.Edit() method, and add view, add Empty Razor view named as "Edit.cshtml".
+  After adding a Empty Razore view named Edit.cshtml, you will see a new view file added with the name as Edit.cshtml 
+  under View=> Product folder. 
+  
+  STEP 20.3: Register the model class (ProductDTO) in the Edit.cshtml view to bind the form fields to the properties of the ProductDTO class.
+  We need it because we need to bind witht the form (Edit.cshtml) fields to the properties of the ProductDTO class.
 
-  20.
+  STEP 20.4:Need to add the following new fields in the Edit.cshtml view:
+  Add new Field to display ID of the Product in the Edit.cshtml view. This field will be used to identify the product being edited and will be hidden from the user.
+  Add new Field to display the existing image path of the Product in the Edit.cshtml view. This field will be used to show the current image of the product being edited and will be displayed as an image element in the form.
+  Add new Field for CreatedAt property of the Product in the Edit.cshtml view. This field will be used to show the date and time when the product was created and will be displayed as a read-only field in the form.
+
+
+  STEP 20.4: Add the Form body of Edit.cshtml.
+  STEP 20.5: Add the form submission logic in the Edit action method of the ProductsController class to handle the form submission and update the existing product in the database.
+        STEP 20.5.1: Edit [HttpPost] method for 'Edit' at ProductsController.
+        STEP 20.5.2: Add validation logic to check if the model state is valid. If not, return the view with the validation errors.
+        STEP 20.5.3: If the model state is valid, retrieve the existing Product entity from the database using its ID.
+        STEP 20.5.4: Update its properties with the values from the ProductDTO object.
+        STEP 20.5.5: If a new image file is uploaded, save it to the server and update the ImageFileName property of the Product entity.
+        STEP 20.5.6: Save changes to the database using ApplicationDBContext and call SaveChanges() to persist the changes.
+
+
+ -----------------------------------------------
+ To Delete a existing Product, do the following steps:
+ STEP 21:
+ STEP 21.1: Add onclick confirmation dialog to the Delete button in the Index.cshtml view to confirm the deletion of the product before proceeding with the delete operation.
+ STEP 21.2:
+ Create a new action method named "Delete" in the ProductsController class to handle the Delete operation. 
+    This action method will be responsible for displaying the confirmation page to delete an existing product and handling the form submission.
+    This will calls from on Delete button click in the Index.cshtml view. It will pass the ID of the product to be deleted as a parameter to the Delete action method.
+  STEP 21.3: Check the Product is exist in the database or not, if not then return NotFound() result.
+  If it exists, retrieve the existing Product entity from the database using its ID and pass it to the Delete.cshtml view to display the 
+  product details for confirmation before deletion.this is due to the concurrency checking. If the product is deleted by another user, 
+  then it will return NotFound() result.
+  
+  STEP 21.4: If product found, Delete the Image file from the server using the ImageFileName property of the Product entity. 
+  This will ensure that the image file is removed from the server when the product is deleted.If the same Image file is used by another product, 
+  then it will not delete the image file from the server. It will only delete the image file if it is not used by any other product.
+  
+  STEP 21.5: Delete the object from Databse using ApplicationDBContext and call SaveChanges() to persist the changes.
+  STEP 21.6: After successfully deleting the product, redirect the user to the Index action of the ProductsController to display the list of products.
+ -----------------------------------------------
+  22.
   Steps to run the project:
    - Open the project in Visual Studio.
    - Restore NuGet packages.

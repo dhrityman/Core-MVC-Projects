@@ -9,6 +9,11 @@ namespace BestStoreMVC.Models
     /// </summary>
     public class ProductDTO
     {
+        /// <summary>
+        /// Add for the Edit Product, we need to add the Id property to the ProductDTO class so that we can identify which product is being edited.
+        /// </summary>
+        //public int Id { get; set; }
+
         [Required(ErrorMessage = "Name is required"), MaxLength(100, ErrorMessage = "Name cannot be longer than 100 characters.")]
         public string Name { get; set; } = "";
         [Required(ErrorMessage = "Brand is required"), MaxLength(100, ErrorMessage = "Brand cannot be longer than 100 characters.")]
