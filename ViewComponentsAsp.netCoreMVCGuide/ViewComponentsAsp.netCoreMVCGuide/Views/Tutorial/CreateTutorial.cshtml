@@ -1,0 +1,22 @@
+﻿@model TutorialViewModel
+
+@{
+    ViewBag.Title = "Create Tutorial";
+}
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p><h1>Add new tutorial</h1></p>
+        <form method="post" asp-controller="Tutorial" asp-action="CreateTutorial">
+
+            @*Partial tag helper*@
+            <partial name="_TutorialFormFields" model="Model" />
+
+            @*Asynchronous Html helper*@
+            @*@await Html.PartialAsync("_TutorialFormFields",Model)*@
+
+        </form>
+    </div>
+</div>
+
+
