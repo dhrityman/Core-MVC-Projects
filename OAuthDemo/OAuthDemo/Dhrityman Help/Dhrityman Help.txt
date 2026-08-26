@@ -1,0 +1,61 @@
+YouTube Heling Video: Google OAuth Sign In with ASP.NET Core .NET 9 | Step by Step
+https://www.youtube.com/watch?v=GHff2ZMyvOw&t=20s
+
+Connection String:
+
+Windows Authentication:
+"ConnectionStrings": {
+    "DefaultConnection": "Data Source=localhost;Initial Catalog=OAuthDemoDB;Integrated Security=True;Trust Server Certificate=True;"
+  },
+Sql Server Authentication:
+"ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Database=OAuthDemoDB;User Id=dm;Password=dm;TrustServerCertificate=True;"
+  },
+
+  Server=localhost;Database=demo;User Id=dm;Password=dm;TrustServerCertificate=True;
+  ----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------
+
+Step 1: Create a New Porject with name OAuthDemo
+Step 2: Select Authentication Type: 'Individual Accounts' and .Net Version 10.0
+Step 3: Select Configure for HTTPs=True
+Step 3: Add the following NuGet Package
+		1. 'Microsoft.AspNetCore.Authentication.Google'  Latest stable 10.0.11 
+Step 4: Open SQL Server Management Studio and add new Database named as 'OAuthDemoDB'
+Step 5: Go to the  'appsettings.json' add ConnectionStrings with 'Initial Catalog=OAuthDemoDB'
+Step 6: Go to Tool=>'NuGet Packet Manager'=>'Packate Manager Console'
+    Step 6.1: Run the following command to create migration (Video Time: 02:06)
+            Add-Migration InitialMigration
+    Step 6.2: Run the following command to update the database
+            Update-Database
+Step 7: Go to the  'appsettings.json' add "Authentication" Section
+----------------
+"Authentication": {
+    "Google": {
+      "ClientId": "XXX",
+      "ClientSecret": "XXX"
+    }
+  }
+  ----------------
+Step 8:  Add the following in Program.cs
+var google = builder.Configuration.GetSection("Authentication:Google");
+builder.Services.AddAuthentication().
+    AddGoogle(options =>
+    {
+        options.ClientId = google["ClientId"]!;
+        options.ClientSecret = google["ClientSecret"]!;
+        options.CallbackPath = "/signin-google";
+    });
+
+Step 9: Add the following in Program.cs file
+        app.UseAuthentication();
+Step 10: Go to Console.cloud.google.com to grab your ClientId and ClientSecret
+Follow the 'Dhrityman Help-OAuthDemo project.docx' steps
+Step 11: Execute the Project and Login with Google Authenticationa and Regaister the user.
+Step 12: Got to the SQL Server database [OAuthDemoDB] and execute the following Querry:
+ STtep 12.1 : Run the Query to check one entry for Google
+         use [OAuthDemoDB];
+        Select * from [dbo].[AspNetUserLogins];
+STtep 12.1 : Run the Query to check one entry for Google registered email address
+        use [OAuthDemoDB];  
+        Select * from [dbo].[AspNetUsers];
