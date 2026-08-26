@@ -30,12 +30,22 @@ Step 6: Go to Tool=>'NuGet Packet Manager'=>'Packate Manager Console'
             Update-Database
 Step 7: Go to the  'appsettings.json' add "Authentication" Section
 ----------------
-
+"Authentication": {
+    "Google": {
+      "ClientId": "XXX",
+      "ClientSecret": "XXX"
+    }
+  }
   ----------------
 Step 8:  Add the following in Program.cs
 var google = builder.Configuration.GetSection("Authentication:Google");
 builder.Services.AddAuthentication().
-   
+    AddGoogle(options =>
+    {
+        options.ClientId = google["ClientId"]!;
+        options.ClientSecret = google["ClientSecret"]!;
+        options.CallbackPath = "/signin-google";
+    });
 
 Step 9: Add the following in Program.cs file
         app.UseAuthentication();
