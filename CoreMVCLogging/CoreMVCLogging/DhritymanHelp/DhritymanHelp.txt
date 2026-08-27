@@ -1,0 +1,25 @@
+
+YouTube Video: 
+Logging In Asp.Net Core | Write Logs to File Using Serilog & ILogger | Asp.Net Core
+
+https://www.youtube.com/watch?v=Ijvtdz4eAWo
+
+
+
+----------------------------------------------------------------------------
+Step 01: Add ASP.NET Core MVC Project
+Step 02: Add DLL reference for the following packages
+			Serilog.AspNetCore 10.0.1              : Serilog logging for ASP.NET Core. This package routes ASP.NET Core log messages through Serilog, so you can get information about ASP.NET's internal operations written to the same Serilog sinks as your application events.
+			Serilog.Settings.Configuration  10.0.1 : A Serilog settings provider that reads from Microsoft.Extensions.Configuration sources, including .NET Core's appsettings.json file. 
+			Serilog.Sinks.File              07.0.0 : Writes Serilog events to one or more text files. 
+			Serilog.Sinks.Console           06.1.1 : A Serilog sink that writes log events to the Windows Console or an ANSI terminal via standard output.
+			Serilog.Enrichers.Environment   03.0.1 : Enriches Serilog events with information from the execution environment.
+			
+
+Step 03: In Program.cs file, load configuration (Serilogsettings.json) file
+Step 04: In Program.cs file, Initialise SriLog Configuration Class Object.
+Step 05: In Program.cs file, Give Instruction to use Serilog for Logging.
+Step 06: Add Try and catch block and add logging in try and catch block.
+Step 07: Write all the configuration setting for 'Serilogsettings.json' file
+Step 07: 'Serilog' is used to log error and other information, before launching the complete Application, but after Sucessufully launch application we should use ASP.NET Ilogger Class.
+Step 08: Create ILogger variable and initiate in contructor in CoreMVCLogging.Controllers.HomeController
