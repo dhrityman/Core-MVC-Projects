@@ -22,6 +22,7 @@ namespace CoreMVCLogging.Controllers
 
             try
             {
+                this._logger.LogInformation("Home Controller Called in CoreMVCLogging Project");
                 int x = 0;
                 // Throwing the exception, by dividing zero
                 int y = 5 / x;

@@ -4,7 +4,16 @@ Logging In Asp.Net Core | Write Logs to File Using Serilog & ILogger | Asp.Net C
 
 https://www.youtube.com/watch?v=Ijvtdz4eAWo
 
+Connection String:
 
+Windows Authentication:
+"ConnectionStrings": {
+    "DefaultConnection": "Data Source=localhost;Initial Catalog=CoreMVCLogging;Integrated Security=True;Trust Server Certificate=True;"
+  },
+Sql Server Authentication:
+"ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Database=CoreMVCLogging;User Id=dm;Password=dm;TrustServerCertificate=True;"
+  },
 
 ----------------------------------------------------------------------------
 Step 01: Add ASP.NET Core MVC Project
@@ -23,3 +32,16 @@ Step 06: Add Try and catch block and add logging in try and catch block.
 Step 07: Write all the configuration setting for 'Serilogsettings.json' file
 Step 07: 'Serilog' is used to log error and other information, before launching the complete Application, but after Sucessufully launch application we should use ASP.NET Ilogger Class.
 Step 08: Create ILogger variable and initiate in contructor in CoreMVCLogging.Controllers.HomeController
+=========================================================================================================================
+YouTube Video: 
+Serilog with SQL Server in ASP.NET Core MVC | Step-by-Step Guide by Mr.Narendrababu
+
+https://www.youtube.com/watch?v=cZpwzbNfXk4
+
+Video Time : 19:35/57:04
+Write Log in SQL Server Database
+Step 09: Add DLL reference for the following packages
+		Serilog.Sinks.MSSqlServer     10.0.1 : A Serilog sink that writes events to Microsoft SQL Server. This sink will write the log event data to a table and can optionally also store the properties inside an XML or JSON column so they can be queried. Important properties can also be written to their own separate columns.
+Step 10: Configure Serilog to log the events  in the SQL Server database for a specified columns.
+
+		
