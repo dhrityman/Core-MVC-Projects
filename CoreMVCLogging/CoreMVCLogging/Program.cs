@@ -1,24 +1,53 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Options;
 using Serilog;
 using Serilog.Events;
+using Serilog.Sinks.MSSqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Step 10: Start: Configure Serilog to log the events  in the SQL Server database for a specified columns.
+var columnOptions = new ColumnOptions();
+columnOptions.Store.Remove(StandardColumn.Properties);
+//columnOptions.Store.Add(StandardColumn.Id);
+//columnOptions.Store.Add(StandardColumn.Message);
+columnOptions.Store.Add(StandardColumn.LogEvent);
+//columnOptions.Store.Add(StandardColumn.TimeStamp);
+
 //Step 03:Start:Load our configuration (Serilogsettings.json) file
 var configuration = new ConfigurationBuilder()
-    //.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile("Serilogsettings.json", optional: false, reloadOnChange: true)
     .AddEnvironmentVariables()
     .Build();
 //Step 03:End
 
-//Step 04:Start:Initialise SriLog Configuration Class Object
 Log.Logger = new LoggerConfiguration()
-             .ReadFrom.Configuration(configuration)
+    .ReadFrom.Configuration(configuration)
              .Enrich.FromLogContext()
-             .Enrich.WithMachineName()             
+             .Enrich.WithMachineName()
              .Enrich.WithEnvironmentName()
-             .CreateLogger();
+    .WriteTo.MSSqlServer(
+    connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
+    sinkOptions: new MSSqlServerSinkOptions
+    {
+        AutoCreateSqlDatabase = true,
+        TableName = "CoreMVCLoggingLogs",
+        AutoCreateSqlTable = true
+    },
+    columnOptions: columnOptions)
+    .CreateLogger();
+//Step 10: End
+
+
+
+//Step 04:Start:Initialise SriLog Configuration Class Object
+//Log.Logger = new LoggerConfiguration()
+//             .ReadFrom.Configuration(configuration)
+//             .Enrich.FromLogContext()
+//             .Enrich.WithMachineName()
+//             .Enrich.WithEnvironmentName()
+//             .CreateLogger();
 //Step 04:End
 
 //Step 05:Start: Give Instruction to use Serilog for Logging

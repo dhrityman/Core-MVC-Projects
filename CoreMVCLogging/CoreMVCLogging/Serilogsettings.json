@@ -1,6 +1,6 @@
 {
   "Serilog": {
-    "Using": [ "Serilog.Sinks.Console", "Serilog.Sinks.File" ],
+    "Using": [ "Serilog.Sinks.Console", "Serilog.Sinks.File", "Serilog.Sinks.MSSqlServer" ],
     "MinimumLevel": {
       "Default": "Information",
       "Override": {
@@ -17,7 +17,7 @@
           "outputTemplate": "[{Timestamp:HH:mm:ss}{Level:u3}] {Message:lj}{NewLine}{Exception}"
         }
       },
-    
+
       {
         "Name": "File",
         "Args": {
@@ -25,6 +25,15 @@
           "rollingInterval": "Day",
           "retainedFileCountLimit": 30,
           "outputTemplate": "{Timestamp: yyyy-MM-dd HH:mm:ss.fff zzz}[{Level:u3}] {ClientIp} {Message:lj}{NewLine}{Exception}"
+        }
+      },
+      {
+        "Name": "MSSqlServer",
+        "Args": {
+          "connectionString": "DefaultConnection",
+          "tableName": "CoreMVCLoggingLogs",
+          "autoCreateSqlDatabase": true,
+          "autoCreateSqlTable": true
         }
       }
     ],
